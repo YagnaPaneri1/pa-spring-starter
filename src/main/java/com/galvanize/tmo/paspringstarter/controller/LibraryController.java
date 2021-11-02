@@ -32,16 +32,15 @@ public class LibraryController {
     }
 
     @GetMapping("/api/books")
-    public ResponseEntity<String> getAllBooks() {
+    public ResponseEntity getAllBooks() {
         try {
             List<Book> lib = new ArrayList<>();
             libraryRepo.findAllOrderByTitleAsc().forEach(lib::add);
                 if (lib.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
-            ObjectMapper obj = new ObjectMapper();
-                obj.enable(SerializationFeature.INDENT_OUTPUT);
-                return new ResponseEntity<>(obj.writeValueAsString(lib), HttpStatus.OK);
+
+                return new ResponseEntity<>(lib, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
