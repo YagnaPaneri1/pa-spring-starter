@@ -1,5 +1,7 @@
 package com.galvanize.tmo.paspringstarter.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.galvanize.tmo.paspringstarter.model.Book;
 import com.galvanize.tmo.paspringstarter.repository.LibraryRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,14 +32,16 @@ public class LibraryController {
     }
 
     @GetMapping("/api/books")
-    public ResponseEntity<List<Book>> getAllBooks() {
+    public ResponseEntity<String> getAllBooks() {
         try {
             List<Book> lib = new ArrayList<>();
             libraryRepo.findAllOrderByTitleAsc().forEach(lib::add);
                 if (lib.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
-                return new ResponseEntity<>(lib, HttpStatus.OK);
+            ObjectMapper obj = new ObjectMapper();
+                obj.enable(SerializationFeature.INDENT_OUTPUT);
+                return new ResponseEntity<>(obj.writeValueAsString(lib), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
