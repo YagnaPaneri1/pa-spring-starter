@@ -6,13 +6,13 @@ import javax.persistence.*;
 
 @Data
 @Entity
-public class Library {
+public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     public String author;
     public String title;
-    public String yearPublished;
+    public int yearPublished;
 
 }
