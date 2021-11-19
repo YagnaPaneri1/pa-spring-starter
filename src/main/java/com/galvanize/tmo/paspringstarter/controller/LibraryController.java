@@ -42,7 +42,7 @@ public class LibraryController {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
             Map<String,List<Book> >myHashMap =  new HashMap<>();
-            myHashMap.put("Books",lib);
+            myHashMap.put("books",lib);
                 ObjectMapper mapper = new ObjectMapper();
             String jsonString = mapper
                     .writerWithDefaultPrettyPrinter()
